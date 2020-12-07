@@ -57,7 +57,7 @@ case $COMMAND in
 create-schedule) 
 
   JSON_FMT='{"projectId":"%s", "instanceId":"%s", "tableId":"%s", "clusterId":"%s", "expireHours":%d}'
-  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$BT_INSTANCE_ID" "$BT_BACKUP_TABLE_NAME" "$BT_BACKUP_CLUSTER_ID" "$BT_BACKUP_EXPIRE_HOURS")"
+  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$INSTANCE_ID" "$BACKUP_TABLE_NAME" "$BACKUP_CLUSTER_ID" "$BACKUP_EXPIRE_HOURS")"
 
   gcloud scheduler jobs create pubsub "$SCHEDULE_BACKUP_JOB_NAME" \
     --schedule="$SCHEDULE_CRON_STRING" \
@@ -70,7 +70,7 @@ create-schedule)
 update-schedule) 
 
   JSON_FMT='{"projectId":"%s", "instanceId":"%s", "tableId":"%s", "clusterId":"%s", "expireHours":%d}'
-  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$BT_INSTANCE_ID" "$BT_BACKUP_TABLE_NAME" "$BT_BACKUP_CLUSTER_ID" "$BT_BACKUP_EXPIRE_HOURS")"
+  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$INSTANCE_ID" "$BACKUP_TABLE_NAME" "$BACKUP_CLUSTER_ID" "$BACKUP_EXPIRE_HOURS")"
 
   gcloud scheduler jobs update pubsub "$SCHEDULE_BACKUP_JOB_NAME" \
     --schedule="$SCHEDULE_CRON_STRING" \

@@ -46,10 +46,42 @@ Then add notification channels you just created to alerting policies.
 
 ### APIs and IAM roles setup
 
+Configuring and deploying the Scheduled backup solution consists of three main steps - enabling all the Cloud APIs needed for the solution, deploying the services, and the runtime creation of backups.
 <img src="https://drive.google.com/uc?export=view&id=1YHUh5FKSuNMTSj6_E7Ehsq31RHNPu2Wu" width="600" height="auto" />
 
-The above diagram shows the Google Cloud products involved in this scheduled backup solution and action flows between them.
-
+#### IAM Roles for Administrators
 The administrator should be granted specific roles to deploy the services needed for the solution.
+
+| Role | Purpose |
+| - |- |
+| <em>roles/bigtable.admin</em> | Cloud Bigtable Administrator |
+| <em>roles/cloudfunctions.admin</em> | to deploy and manage Cloud Functions |
+| <em>roles/deploymentmanager.editor</em> | to deploy metrics |
+| <em>roles/pubsub.editor</em> | to create and manage Pub/Sub topics |
+| <em>roles/cloudscheduler.admin</em> | to setup a schedule in Cloud Scheduler |
+| <em>roles/appengine.appAdmin</em> | for Cloud Scheduler to deploy a cron service |
+| <em>roles/monitoring.admin</em> | to setup alerting policies for failure notifications |
+| <em>roles/logging.admin</em> | to add log based user metrics to track failures |
+
+You also need a custom role (ie. backups-admin) with below permissions
+* <em>appengine.applications.create</em> - for Cloud Scheduler to create an App Engine app
+* <em>serviceusage.services.use</em> - for Cloud Scheduler to use the App Engine app
+
+#### Service Account for Cloud Functions
+Cloud Functions calls Cloud Bigtable API to create a backup, it gets triggered when a message arrives on the Pub/Sub topic. For successful execution of the cloud function, it should be able to consume from the Pub/Sub topic and should have permissions to create Cloud Bigtable backups. To accomplish this, perform the following steps:
+
+1. Create a Service Account (e.g. cbt-scheduled-backups@<PROJECT>iam.gserviceaccount.com).
+2. Create a custom role (e.g. backups-admin) with the permissions:
+    * bigtable.backups.create
+    * bigtable.backups.delete
+    * bigtable.backups.get
+    * bigtable.backups.list
+    * bigtable.backups.restore
+    * bigtable.backups.update
+    * bigtable.instances.get
+    * bigtable.tables.create
+    * bigtable.tables.readRows
+3. Assign the custom role and <em>roles/pubsub.subscriber</em> to the service account. This allows Cloud Functions to read messages from the Pub/Sub topic and initiate a create backup request.
+4. Add the administrator as a service account user by adding the user as a member of the service account with role <em>roles/iam.serviceAccountUser</em>. This allows the administrator to deploy Cloud Functions.
 
 ### Limitations

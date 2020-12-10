@@ -60,7 +60,7 @@ create-schedule)
   SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$INSTANCE_ID" "$BACKUP_TABLE_NAME" "$BACKUP_CLUSTER_ID" "$BACKUP_EXPIRE_HOURS")"
 
   gcloud scheduler jobs create pubsub "$SCHEDULE_BACKUP_JOB_NAME" \
-    --schedule="$SCHEDULE_CRON_STRING" \
+    --schedule="$SCHEDULE_CRON_TIMESPEC" \
     --topic="$SCHEDULE_PUBSUB_TOPIC_NAME" \
     --message-body="$SCHEDULE_MESSAGE_BODY" \
     --project "$PROJECT_ID"
@@ -73,7 +73,7 @@ update-schedule)
   SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$INSTANCE_ID" "$BACKUP_TABLE_NAME" "$BACKUP_CLUSTER_ID" "$BACKUP_EXPIRE_HOURS")"
 
   gcloud scheduler jobs update pubsub "$SCHEDULE_BACKUP_JOB_NAME" \
-    --schedule="$SCHEDULE_CRON_STRING" \
+    --schedule="$SCHEDULE_CRON_TIMESPEC" \
     --topic="$SCHEDULE_PUBSUB_TOPIC_NAME" \
     --message-body="$SCHEDULE_MESSAGE_BODY" \
     --project "$PROJECT_ID"

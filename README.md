@@ -1,6 +1,6 @@
 # Scheduled Backups
 
-This example shows how to use Cloud Scheduler and Cloud Functions to configure a schedule for creating Cloud Bigtable backups.
+This example shows how to use Cloud Scheduler and Cloud Functions to configure a schedule that creates Cloud Bigtable backups periodically.
 
 ## Create scheduled backups
 
@@ -46,5 +46,10 @@ Then add notification channels you just created to alerting policies.
 
 ### APIs and IAM roles setup
 
+<img src="https://drive.google.com/uc?export=view&id=1YHUh5FKSuNMTSj6_E7Ehsq31RHNPu2Wu" width="600" height="auto" />
+
+The above diagram shows the Google Cloud products involved in this scheduled backup solution and action flows between them.
+
+The administrator should be granted specific roles to deploy the services needed for the solution.
 
 ### Limitations

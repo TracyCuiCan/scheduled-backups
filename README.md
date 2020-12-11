@@ -85,3 +85,5 @@ Cloud Functions calls Cloud Bigtable API to create a backup, it gets triggered w
 4. Add the administrator as a service account user by adding the user as a member of the service account with role <em>roles/iam.serviceAccountUser</em>. This allows the administrator to deploy Cloud Functions.
 
 ### Limitations
+
+To use Cloud Scheduler, you must [create an App Engine app](https://cloud.google.com/scheduler/docs#supported_regions). Once you set a zone for the App Engine app, you cannot change it. Your Cloud Scheduler job will be running in the same zone as your App Engine app.

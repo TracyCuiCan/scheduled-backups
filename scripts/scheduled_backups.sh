@@ -32,11 +32,11 @@ source "$CONFIG"
 function print_usage() {
   echo 'Usage: $0 [create-schedule | update-schedule]'
   echo ""
-  echo "create-schedule - create a schedule for backup using the properties defined in the config/scheduled-backups.properties file"
+  echo "create-schedule - create a schedule for backup creation using the properties defined in the config/scheduled-backups.properties file"
   echo ""
-  echo "update-schedule - update an existing schedule for backup using the properties defined in the config/scheduled-backups.properties file"
+  echo "update-schedule - update an existing schedule for backup creation using the properties defined in the config/scheduled-backups.properties file"
   echo ""
-  echo "deploy-backup-function - deploy the cloud function that initiates a backup. the function will be invoked by the cloud scheduler"
+  echo "deploy-backup-function - deploy the Cloud function that initiates a backup. the function will be invoked by the Cloud Scheduler"
   echo ""
   echo "add-metrics - create and deploy user defined metrics for monitoring and alerting on scheduled backup errors and failures"
   echo ""
@@ -57,10 +57,12 @@ case $COMMAND in
 create-schedule) 
 
   JSON_FMT='{"projectId":"%s", "instanceId":"%s", "tableId":"%s", "clusterId":"%s", "expireHours":%d}'
-  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$INSTANCE_ID" "$BACKUP_TABLE_NAME" "$BACKUP_CLUSTER_ID" "$BACKUP_EXPIRE_HOURS")"
+  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID"
+  "$BIGTABLE_INSTANCE_ID" "$BIGTABLE_BACKUP_TABLE_NAME"
+  "$BIGTABLE_BACKUP_CLUSTER_ID" "$BIGTABLE_BACKUP_EXPIRE_HOURS")"
 
-  gcloud scheduler jobs create pubsub "$SCHEDULE_BACKUP_JOB_NAME" \
-    --schedule="$SCHEDULE_CRON_TIMESPEC" \
+  gcloud scheduler jobs create pubsub "$SCHEDULE_JOB_NAME" \
+    --schedule="$SCHEDULE_JOB_TIMESPEC" \
     --topic="$SCHEDULE_PUBSUB_TOPIC_NAME" \
     --message-body="$SCHEDULE_MESSAGE_BODY" \
     --project "$PROJECT_ID"
@@ -70,10 +72,12 @@ create-schedule)
 update-schedule) 
 
   JSON_FMT='{"projectId":"%s", "instanceId":"%s", "tableId":"%s", "clusterId":"%s", "expireHours":%d}'
-  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID" "$INSTANCE_ID" "$BACKUP_TABLE_NAME" "$BACKUP_CLUSTER_ID" "$BACKUP_EXPIRE_HOURS")"
+  SCHEDULE_MESSAGE_BODY="$(printf "$JSON_FMT" "$PROJECT_ID"
+  "$BIGTABLE_INSTANCE_ID" "$BIGTABLE_BACKUP_TABLE_NAME"
+  "$BIGTABLE_BACKUP_CLUSTER_ID" "$BIGTABLE_BACKUP_EXPIRE_HOURS")"
 
-  gcloud scheduler jobs update pubsub "$SCHEDULE_BACKUP_JOB_NAME" \
-    --schedule="$SCHEDULE_CRON_TIMESPEC" \
+  gcloud scheduler jobs update pubsub "$SCHEDULE_JOB_NAME" \
+    --schedule="$SCHEDULE_JOB_TIMESPEC" \
     --topic="$SCHEDULE_PUBSUB_TOPIC_NAME" \
     --message-body="$SCHEDULE_MESSAGE_BODY" \
     --project "$PROJECT_ID"

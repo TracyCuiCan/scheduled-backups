@@ -67,7 +67,7 @@ Then add notification channels you just created to alerting policies.
 
 ### APIs and IAM roles setup
 
-The diagram below shows how actions flow between human roles and APIs.
+The diagram below focuses on the actions flow between human roles and APIs.
 <img src="https://drive.google.com/uc?export=view&id=1YHUh5FKSuNMTSj6_E7Ehsq31RHNPu2Wu" width="600" height="auto" />
 
 #### IAM Roles for Administrators
@@ -87,10 +87,9 @@ for the solution.
 |<em>roles/logging.admin</em>           |to add log based user metrics to track failures     |
 
 
-You also need a custom role (ie. backups-admin) with below permissions *
-<em>appengine.applications.create</em> - for Cloud Scheduler to create an App
-Engine app * <em>serviceusage.services.use</em> - for Cloud Scheduler to use the
-App Engine app
+You also need a custom role (ie. backups-admin) with below permissions
+* <em>appengine.applications.create</em> - for Cloud Scheduler to create an App Engine app
+* <em>serviceusage.services.use</em> - for Cloud Scheduler to use the App Engine app
 
 #### Service Account for Cloud Functions
 

@@ -22,7 +22,7 @@ backup using Cloud Bigtable Java API.
 gcloud pubsub topics create cloud-bigtable-scheduled-backups --project <project-id>
 ```
 
-1.  Create and deploy a Cloud Function `cbt-create-backup-function` which is
+3.  Create and deploy a Cloud Function `cbt-create-backup-function` which is
     called whenever a Pub/Sub message arrives in
     `cloud-bigtable-scheduled-backups` topic:
 
@@ -30,7 +30,7 @@ gcloud pubsub topics create cloud-bigtable-scheduled-backups --project <project-
 ./scripts/scheduled_backups.sh deploy-backup-function
 ```
 
-1.  Deploy the scheduled backup configuration to Cloud Scheduler:
+4.  Deploy the scheduled backup configuration to Cloud Scheduler:
 
 ```
 ./scripts/scheduled_backups.sh create-schedule
@@ -63,7 +63,7 @@ in Cloud Logging.
     metric, and define what the condition of triggering an alert is, e.g., any
     time series violates that the value is above 0 for 1 minute.
 
-Then add notification channels you just created to alerting policies.
+2.  Add notification channels you just created to alerting policies.
 
 ### APIs and IAM roles setup
 

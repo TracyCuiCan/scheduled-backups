@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.example.cloud.bigtable.scheduledbackups.resource;
 
+//CHECKSTYLE OFF: AbbreviationAsWordInName
 public class CreateBackupRequestHTTP {
-
+  //CHECKSTYLE ON: AbbreviationAsWordInName
   private String sourceTable;
   private String expireTime;
 

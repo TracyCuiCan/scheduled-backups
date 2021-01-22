@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.example.cloud.bigtable.scheduledbackups;
 
 import com.example.cloud.bigtable.scheduledbackups.resource.CreateBackupMessage;
@@ -34,7 +35,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
+//CHECKSTYLE OFF: AbbreviationAsWordInName
 public class CreateBackupREST implements BackgroundFunction<PubSubMessage> {
+  //CHECKSTYLE ON: AbbreviationAsWordInName
   private static final Logger logger = Logger.getLogger(CreateBackupREST.class.getName());
 
   private static ObjectMapper mapper = new ObjectMapper();

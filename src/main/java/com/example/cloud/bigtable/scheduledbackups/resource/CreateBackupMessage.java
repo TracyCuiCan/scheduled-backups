@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.example.cloud.bigtable.scheduledbackups.resource;
 
 public class CreateBackupMessage {
@@ -65,6 +66,7 @@ public class CreateBackupMessage {
   @Override
   public String toString() {
     return "CreateBackupMessage [projectId=" + projectId + ", instanceId=" + instanceId
-+ ", tableId=" + tableId + ", clusterId=" + clusterId + ", expireHours=" + expireHours + "]";
+        + ", tableId=" + tableId + ", clusterId=" + clusterId
+        + ", expireHours=" + expireHours + "]";
   }
 }
